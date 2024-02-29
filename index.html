@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico"/>
+        <title>Pomodoro Task Manager</title>
+        <link rel="stylesheet" href="./style/estilos.css">
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
+        <script src="./js/kanban.js"></script>
+        <script src="./js/pomodoro.js"></script>
+    </head>
+    <body>
+        <audio src="./media/audio/alarma.mp3" id="silvato" loop></audio>
+        <div class="modal fade" tabindex="-1" id="informacionDeLaTarea">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" id="divModal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloModal" style="font-weight: bold;">Titulo</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p id="descripcionModal">Descripcion:</p>
+                        <p id="fechaModal">Fecha de creacion:</p>
+                        <p id="horaModal">Hora de creación:</p>
+                        <p id="prioridadModal">Prioridad</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" tabindex="-1" id="modalConfirmacionReinicioTemporizador">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background-color: rgba(2, 255, 2, 0.376); color:black;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight: bold;">¿Estas seguro de deseas cambiar los minutos del temporizador?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="font-weight: bold;">No</button>
+                        <button type="button" class="btn btn-secondary" id="botonAfirmativoReiniciarTemporizador" data-bs-dismiss="modal" style="color:rgb(2, 255, 2);">Si</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container bg-secondary" id="contenedorPrincipal">
+            <header class="row mt-5">
+                <div class="col-sm-12 col-md-12 col-lg-4 mb-5" style="display:flex; align-items: center; justify-content: space-around;">
+                    <button type="button" class="btn btn-primary botonMinutos" style="font-weight: bold;">01 min</button>
+                    <button type="button" class="btn btn-primary botonMinutos" style="font-weight: bold;">05 min</button>
+                    <button type="button" class="btn btn-primary botonMinutos" style="font-weight: bold;">15 min</button>
+                    <button type="button" class="btn btn-primary botonMinutos" style="font-weight: bold;">25 min</button>
+                </div>
+                <div class="col-sm-12 col-lg-4 mb-5" style="display:flex; align-items: center; justify-content: center;">
+                    <img src="./media/imagenes/numeros/2.png" alt="imagen primer digito minutos" id="imagenPrimerDigitoMinutos" width="70vw" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/espacio.png" alt="imagen espacio" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/5.png" alt="imagen segundo digito minutos" id="imagenSegundoDigitoMinutos" width="70vw" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/dosPuntos.png" alt="imagen dos Puntos" id="imagenDosPuntos" width="70vw" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/0.png" alt="imagen primer digito segundos" id="imagenPrimerDigitoSegundos" width="70vw" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/espacio.png" alt="imagen espacio" height="177vh" draggable="false">
+                    <img src="./media/imagenes/numeros/0.png" alt="imagen segundo digito segundos" id="imagenSegundoDigitoSegundos" width="70vw" height="177vh" draggable="false">
+                </div>
+                <div class="col-sm-12 col-lg-4 mb-5" style="display:flex; align-items: center; justify-content: center;">
+                    <button type="button" class="btn btn-primary botonIniciarPausarReanudar" id="botonIniciar" style="font-weight: bold;">Iniciar</button>
+                </div>
+            </header>
+            <section>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-3 mb-5">
+                        <div class="card w-auto h-100 border border-primary" style="color:rgb(2, 255, 2);">
+                            <div class="card-header bg-primary">
+                                <p class="h4" style="font-weight: bold; color:rgb(0, 0, 0);">
+                                    Crear tarea
+                                </p>
+                            </div>
+                            <div class="card-body bg-secondary">
+                                <form class="row">
+                                    <div class="col-sm-12">
+                                        <label class=" col-form-label title" for="titulo">
+                                            Titulo:
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control bg-secondary border border-primary" style="color:rgb(2, 255, 2);" id="titulo" name="Titulo" spellcheck="true" autofocus/>
+                                        <p id="mensajeValidacionTitulo"></p>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <label class=" col-form-label title" for="descripcion">
+                                            Descripción:
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control bg-secondary border border-primary" style="color:rgb(2, 255, 2);" id="descripcion" name="Descripcion" name="textarea" rows="3" cols="23" spellcheck="true"></textarea>
+                                        <p id="mensajeValidacionDescripcion"></p>
+                                    </div>
+                                    
+                                    <div class="col-sm-12">
+                                        <label for="prioridad">
+                                            Prioridad:
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <select class="form-select bg-secondary border border-primary" style="color:rgb(2, 255, 2);" name="select" id="prioridad">
+                                            <option value="No especificada" id="noEspecificada" selected>No especificada</option>
+                                            <option value="Prioridad baja">Prioridad baja</option>
+                                            <option value="Prioridad media">Prioridad media</option>
+                                            <option value="Prioridad alta">Prioridad alta</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-sm-12 mt-4" style="text-align: center;">
+                                        <button type="button" class="btn btn-primary" id="botonCrear" name="BotonCrear" style="font-weight: bold;">
+                                            Crear
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer bg-primary"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-3 mb-5">
+                        <div class="card w-auto h-100 border border-primary">
+                            <div class="card-header bg-primary">
+                                <p class="h4" style="font-weight: bold;">
+                                    Pendiente
+                                </p>
+                            </div>
+                            <div class="card-body zonaDeDescenso objetivoDeDescenso bg-secondary" id="columnaPendiente" style="height: 400px; overflow-y: auto;"></div>
+                            <div class="card-footer bg-primary"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-3 mb-5">
+                        <div class="card w-auto h-100 border border-primary">
+                            <div class="card-header bg-primary">
+                                <p class="h4" style="font-weight: bold;">
+                                    En progreso
+                                </p>
+                            </div>
+                            <div class="card-body zonaDeDescenso objetivoDeDescenso bg-secondary" id="columnaEnProgreso" style="height: 400px; overflow-y: auto;"></div>
+                            <div class="card-footer bg-primary"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-3 mb-5">
+                        <div class="card w-auto h-100 border border-primary" id="cartaColumnaCompletada">
+                            <div class="card-header bg-primary">
+                                <p class="h4" style="font-weight: bold;">
+                                    Completada
+                                </p>
+                            </div>
+                            <div class="card-body zonaDeDescenso objetivoDeDescenso bg-secondary" id="columnaCompletada" style="height: 400px; overflow-y: auto;"></div>
+                            <div class="card-footer bg-primary"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+    <script src="./bootstrap/js/bootstrap.bundle.js"></script>
+</html>
