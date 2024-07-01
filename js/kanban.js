@@ -20,7 +20,7 @@ document.addEventListener
                     mostrarTareasGuardadas();
                     section.ondragstart=function(event)
                     {
-                        if(event.target.className==="card arrastrable border border-secondary mb-4")
+                        if(event.target.className==="card arrastrable border border-secondary mb-4 carta")
                         {
                             // store a ref. on the dragged elem
                             arrastrado = event.target;
@@ -60,7 +60,7 @@ document.addEventListener
 
                         section.ondragstart=function(event)
                         {
-                            if(event.target.className==="card arrastrable border border-secondary mb-4")
+                            if(event.target.className==="card arrastrable border border-secondary mb-4 carta")
                             {
                                 // store a ref. on the dragged elem
                                 arrastrado = event.target;
@@ -226,7 +226,7 @@ document.addEventListener
             let columna=document.getElementById(idDeLaColumnaDondeSeCrearaLaTarea);
 
             let divCarta=document.createElement("div");
-            divCarta.className="card arrastrable border border-secondary mb-4";
+            divCarta.className="card arrastrable border border-secondary mb-4 carta";
             divCarta.id=idTarea;
             if(idDeLaColumnaDondeSeCrearaLaTarea==="columnaCompletada")
             {

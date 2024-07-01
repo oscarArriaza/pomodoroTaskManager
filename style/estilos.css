@@ -4,7 +4,11 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+    font-weight:bold;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE */
+    user-select: none;
 }
 html
 {
@@ -26,4 +30,8 @@ body
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE */
     user-select: none;
+}
+.carta
+{
+    cursor: pointer;
 }
